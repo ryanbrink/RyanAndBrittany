@@ -1,4 +1,0 @@
-RyanAndBrittany
-===============
-
-RyanAndBrittany.com
