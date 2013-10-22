@@ -1,0 +1,43 @@
+.logo {
+	margin-top: -800px;
+	margin-bottom: 200px;
+	
+}
+
+.main-content {
+	padding-top: 200px;	
+	border-top: 1px solid #aaa;
+	opacity: 1;
+	position: absolute;
+	top: 800px;
+	width: 100%;
+}
+
+.carousel {
+  display: none;
+}
+/* Since positioning the image, we need to help out the caption */
+
+.carousel .item {
+  height: 800px;    
+}		
+.carousel .one {
+    background: url(../assets/img/Us1.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+.carousel .two {
+    background: url(../assets/img/Us2.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+.carousel .three {
+    background: url(../assets/img/Us3.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+.carousel .four {
+    background: url(../assets/img/Us4.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
