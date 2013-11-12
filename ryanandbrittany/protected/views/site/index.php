@@ -51,17 +51,49 @@ $cs->registerCssFile($baseUrl.'/css/ryanandbrittany.css');
 	
 			<form class="row">
 					<div class="span3">
-						<label>First Name</label> <input type="text" class="span3"
-							placeholder="Your First Name"> <label>Last Name</label> <input
-							type="text" class="span3" placeholder="Your Last Name"> <label>Email
-							Address</label> <input type="text" class="span3"
-							placeholder="Your email address"> <label>Subject</label> <select
-							id="subject" name="subject" class="span3">
-							<option value="na" selected="">Choose One:</option>
-							<option value="service">General Customer Service</option>
-							<option value="suggestions">Suggestions</option>
-							<option value="product">Product Support</option>
-						</select>
+						<label>First Name</label>
+							<input type="text" class="span3" placeholder="Your First Name">
+						<label>Last Name</label>
+							<input type="text" class="span3" placeholder="Your Last Name">
+						<label>Meal</label>
+						<!--TODO: Probably want this to be a select? -->
+							<input type="text" class="span3" placeholder="Your choice of meal">
+						<label>Email Address</label>
+							<input type="text" class="span3" placeholder="Your email address">
+						<!--TODO: Fun css stlying to make it purdy-->
+						<label>Total number of adults</label>
+							<select id="adults" class="span3">
+								<option value="1" selected="selected">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+							</select>
+						<div id="additional-adults">
+							<!--Place to put additional adult forms-->
+						</div>
+						<label>Number of kids</label>
+							<select id="kids" class="span3">
+								<option value="0" selected="selected">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+							</select>
+						<div id="additional-kids">
+							<!--Place to put additional kid forms-->
+						</div>
 					</div>
 					<div class="span5">
 						<label>Message</label>
@@ -69,7 +101,7 @@ $cs->registerCssFile($baseUrl.'/css/ryanandbrittany.css');
 							rows="10"></textarea>
 					</div>
 	
-					<button type="submit" class="btn btn-primary pull-right">Send</button>
+					<button type="submit" class="btn btn-primary pull-right">RSVP</button>
 			</form>
 		</div>
 	
@@ -77,6 +109,10 @@ $cs->registerCssFile($baseUrl.'/css/ryanandbrittany.css');
 	</div>
 
 <script type="text/javascript">
+	// Global variable to keep track of how many extra people we have
+	var current_num_adults = 1;
+	var current_num_kids = 0;
+
 	  $(document).ready(function() {
 		window.setTimeout(function() { 
 			$('.carousel').fadeIn(3000);
@@ -84,4 +120,54 @@ $cs->registerCssFile($baseUrl.'/css/ryanandbrittany.css');
 			}, 500);
 	    
 	  });
+	  
+	  $("#adults").change(function() {
+		// The number of adults we need
+		var new_num_adults = $(this).val();
+
+		// If we have to remove some adults
+		while (current_num_adults > new_num_adults) {
+			// Remove the last element from the additional adults
+			$("#additional-adults").children().last().remove();
+			--current_num_adults;
+		}
+		// If we have to add some adults
+		while (new_num_adults > current_num_adults) {
+			// Add a new adult the additional adults div
+			$("#additional-adults").append(getPerson("Additional adult", current_num_adults));
+			current_num_adults++;
+		}
+	  });
+	  
+	  $("#kids").change(function() {
+		// The number of kids we need
+		var new_num_kids = $(this).val();
+
+		// If we have to remove some kids
+		while (current_num_kids > new_num_kids) {
+			// Remove the last element from the additional kids
+			$("#additional-kids").children().last().remove();
+			--current_num_kids;
+		}
+		// If we have to add some kids
+		while (new_num_kids > current_num_kids) {
+			// Add a new kid to the additional kids div
+			$("#additional-kids").append(getPerson("Kid", (++current_num_kids)));
+		}
+	  });
+
+	// This is just a simple function to encapsulate the form for each
+	// individual person
+	function getPerson(type, number) {
+		return '\
+		<div id="individual-person" class="form">\
+			<h4>' + type + ' #' + number + ':</h4>\
+			<label>First Name</label>\
+				<input type="text" class="span3" placeholder="First Name">\
+			<label>Last Name</label>\
+				<input type="text" class="span3" placeholder="Last Name">\
+			<label>Meal</label>\
+				<input type="text" class="span3" placeholder="Choice of meal">\
+		</div>';
+	}
 	</script>
