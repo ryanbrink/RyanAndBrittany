@@ -58,10 +58,13 @@ be attending, and who will be joining you.</p>
 				<!--Place to put additional kid forms-->
 			</div>
 			<label>Note</label>
-			<textarea name="message" id="message" placeholder="Anything else we should know about?" class="input-xlarge span5"
+			<textarea name="message" id="message" placeholder="Anything else we should know about?" class="span3"
 				rows="10"></textarea>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</div>		
+		<div class="span3">
+		Hello!
+		</div>	
 </form>
 <hr />
 <h2 id="about">About Us</h2>

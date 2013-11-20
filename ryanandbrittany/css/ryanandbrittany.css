@@ -41,3 +41,28 @@
     background-size: cover;
     -moz-background-size: cover;
 }
+.carousel .five {
+    background: url(../assets/img/Us5.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+.carousel .six {
+    background: url(../assets/img/Us6.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+.carousel .seven {
+    background: url(../assets/img/Us7.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+.carousel .eight {
+    background: url(../assets/img/Us8.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
+.carousel .nine {
+    background: url(../assets/img/Us9.jpg);
+    background-size: cover;
+    -moz-background-size: cover;
+}
