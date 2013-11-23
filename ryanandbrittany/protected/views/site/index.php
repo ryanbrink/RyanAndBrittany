@@ -1,7 +1,7 @@
 <?php
 /* @var $this SiteController */
 
-$this->pageTitle=Yii::app()->name . " | HOME";
+$this->pageTitle=Yii::app()->name;
 
 
 ?>
@@ -10,7 +10,7 @@ $this->pageTitle=Yii::app()->name . " | HOME";
 <h4>Let us know you'll be here</h4>
 <p>If you've received an invitation for our wedding, 
 please use the form below to let us know that you will 
-be attending, and who will be joining you.</p>
+be attending, and who will be joining you.<br /><br /></p>
 
 <form class="row">
 		<div class="span3">
@@ -62,8 +62,13 @@ be attending, and who will be joining you.</p>
 				rows="10"></textarea>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</div>		
-		<div class="span3">
-		Hello!
+		<div class="span6">
+		We're so glad you can be at our special day! Please fill in your information, as well as your date and any children you will be bringing. There is a nursery available at New Testament Church, so please feel free to bring your kids.
+		<br /><br />
+		The meal will be buffet style: gluten and dairy free potatoes, vegetables, and your choice of beef or chicken.
+		<br /><br />
+		If you have any issues with the form, feel free to simply email <a href="mailto:rsvp@ryanandbrittany.com">rsvp@ryanandbrittany.com</a>, or call 613-362-2609.				
+
 		</div>	
 </form>
 <hr />
