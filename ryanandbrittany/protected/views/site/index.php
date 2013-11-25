@@ -12,36 +12,27 @@ $this->pageTitle=Yii::app()->name;
 please use the form below to let us know that you will 
 be attending, and who will be joining you.<br /><br /></p>
 
-<form class="row">
+<form action="index.php?r=site/contact" method="post" name="ContactForm" class="row">
 		<div class="span3">
 			<label>First Name</label>
-				<input type="text" class="span3" placeholder="Your First Name">
+				<input name="meal" type="text" class="span3" placeholder="Your First Name">
 			<label>Last Name</label>
-				<input type="text" class="span3" placeholder="Your Last Name">
+				<input name="lName" type="text" class="span3" placeholder="Your Last Name">
 			<label>Meal</label>
 			<!--TODO: Probably want this to be a select? -->
-				<input type="text" class="span3" placeholder="Your choice of meal">
+				<select name="meal" id="meal" class="span3">
+					<option value="0" selected="selected">Chicken</option>
+					<option value="1">Roast Beef</option>
 			<label>Email Address</label>
-				<input type="text" class="span3" placeholder="Your email address">
+				<input name="email" type="text" class="span3" placeholder="Your email address">
 			<!--TODO: Fun css stlying to make it purdy-->
-			<label>Total number of adults</label>
-				<select id="adults" class="span3">
-					<option value="1" selected="selected">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-				</select>
-			<div id="additional-adults">
+			Bringing a date
+				<input name="date" id="date" type="checkbox" class="span3">
+			<div id="date-information">
 				<!--Place to put additional adult forms-->
 			</div>
 			<label>How many children are you bringing?</label>
-				<select id="kids" class="span3">
+				<select name="kids" id="kids" class="span3">
 					<option value="0" selected="selected">0</option>
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -107,8 +98,7 @@ which is at
 		
 
 <script type="text/javascript">
-	// Global variable to keep track of how many extra people we have
-	var current_num_adults = 1;
+	// Global variable to keep track of how many extra kids we have
 	var current_num_kids = 0;
 
 	  $(document).ready(function() {
@@ -119,21 +109,18 @@ which is at
 	    
 	  });
 	  
-	  $("#adults").change(function() {
-		// The number of adults we need
-		var new_num_adults = $(this).val();
-
-		// If we have to remove some adults
-		while (current_num_adults > new_num_adults) {
-			// Remove the last element from the additional adults
-			$("#additional-adults").children().last().remove();
-			--current_num_adults;
+	  $("#date").change(function() {
+		if ($(this).is(':checked')) {
+			// Bringing a date
+			$("#date-information").append('\
+				<div id="date-info" class="form">\
+					<h4>Date information:</h4>' +
+					getPersonForm("date", 0) + 
+				'</div>');
 		}
-		// If we have to add some adults
-		while (new_num_adults > current_num_adults) {
-			// Add a new adult the additional adults div
-			$("#additional-adults").append(getPerson("Additional adult", current_num_adults));
-			current_num_adults++;
+		else {
+			// Need to remove that form
+			$("#date-information").children().last().remove();
 		}
 	  });
 	  
@@ -150,22 +137,25 @@ which is at
 		// If we have to add some kids
 		while (new_num_kids > current_num_kids) {
 			// Add a new kid to the additional kids div
-			$("#additional-kids").append(getPerson("Child", (++current_num_kids)));
+			$("#additional-kids").append('\
+				<div id="kid-' + (++current_num_kids) + '-info" class="form">\
+					<h4>Child ' + current_num_kids + ':</h4>' +
+					getPersonForm("kid", current_num_kids) + 
+				'</div>');
 		}
 	  });
 
 	// This is just a simple function to encapsulate the form for each
 	// individual person
-	function getPerson(type, number) {
+	function getPersonForm(type, num) {
 		return '\
-		<div id="individual-person" class="form">\
-			<h4>' + type + ' ' + number + ':</h4>\
 			<label>First Name</label>\
-				<input type="text" class="span3" placeholder="First Name">\
+				<input name="' + type + '-' + num + '-lName"  type="text" class="span3" placeholder="First Name">\
 			<label>Last Name</label>\
-				<input type="text" class="span3" placeholder="Last Name">\
+				<input name="' + type + '-' + num + '-meal" type="text" class="span3" placeholder="Last Name">\
 			<label>Meal</label>\
-				<input type="text" class="span3" placeholder="Choice of meal">\
-		</div>';
+				<select name="' + type + '-' + num + '-meal" id="meal" class="span3">\
+					<option value="0" selected="selected">Chicken</option>\
+					<option value="1">Roast Beef</option>'
 	}
 	</script>

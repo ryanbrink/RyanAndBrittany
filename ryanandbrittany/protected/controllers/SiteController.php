@@ -65,25 +65,65 @@ class SiteController extends Controller
 	 */
 	public function actionContact()
 	{
-		$model=new ContactForm;
-		if(isset($_POST['ContactForm']))
-		{
-			$model->attributes=$_POST['ContactForm'];
-			if($model->validate())
-			{
-				$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-				$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-				$headers="From: $name <{$model->email}>\r\n".
-					"Reply-To: {$model->email}\r\n".
-					"MIME-Version: 1.0\r\n".
-					"Content-Type: text/plain; charset=UTF-8";
+		// Declare variables that are needed to default
+		$fName = '';
+		$lName = '';
+		$email = '';
+		$meal = 'none';
+		$date = 'off';
+		$kids = 0;
+		$message = 'No content available';
+		
+		// Set all of the variables to their passed-in values, if
+		// available
+		if(isset($_POST['fName'])) { $fName = $_POST['fName']; }
+		if(isset($_POST['lName'])) { $lName = $_POST['lName']; }
+		if(isset($_POST['email'])) { $email = $_POST['email']; }
+		if(isset($_POST['meal'])) { $meal = $this->getMeal($_POST['meal']); }
+		if(isset($_POST['date'])) { $date = ($_POST['date'] == "on") ? "Yes" : "No"; }
+		if(isset($_POST['kids'])) { $kids = $_POST['kids']; }
+		
+		$name='=?UTF-8?B?'.base64_encode($fName + ' ' + $lName).'?=';
+		$subject='=?UTF-8?B?'.base64_encode('RSVP from ' + $name).'?=';
+		$headers="From: $name <{$email}>\r\n".
+			"Reply-To: {$email}\r\n".
+			"MIME-Version: 1.0\r\n".
+			"Content-Type: text/plain; charset=UTF-8";
 
-				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-				$this->refresh();
-			}
+		// Set the message, provided we have SOMETHING to work with from the form
+		if (isset($_POST['fName']) || isset($_POST['lName']) || isset($_POST['email'])) {
+			$message = '\
+				RSVP from ' + $name + '\n\n\
+				Choice of meal: ' + $meal + '\n\
+				Bringing a date: ' + $date + '\n\
+				Number of kids: ' + $kids;
 		}
-		$this->render('contact',array('model'=>$model));
+
+		mail("rsvp@ryanandbrittany.com",$subject,$message,$headers);
+		Yii::app()->user->setFlash('contact','Thank you for RSVP-ing.');
+		$this->refresh();
+		
+		// TODO: I'd be nice to get some proper, backend validation with this stuff:
+		
+		//$model=new ContactForm;
+		//if(isset($_POST['ContactForm']))
+		//{
+		//	$model->attributes=$_POST['ContactForm'];
+		//	if($model->validate())
+		//	{
+		//		$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
+		//		$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
+		//		$headers="From: $name <{$model->email}>\r\n".
+		//			"Reply-To: {$model->email}\r\n".
+		//			"MIME-Version: 1.0\r\n".
+		//			"Content-Type: text/plain; charset=UTF-8";
+		//
+		//		mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
+		//		Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+		//		$this->refresh();
+		//	}
+		//}
+		//$this->render('contact',array('model'=>$model));
 	}
 
 	/**
@@ -119,5 +159,14 @@ class SiteController extends Controller
 	{
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
+	}
+	
+	public function getMeal($mealNum) {
+		if ($mealNum == 0) {
+			return "Chicken";
+		}
+		else {
+			return "Roast Beef";
+		}
 	}
 }
