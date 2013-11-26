@@ -69,6 +69,7 @@ class SiteController extends Controller
 	{
 		$this->layout = "minimal";
 		// Declare variables that are needed to default
+		$coming;
 		$fName = '';
 		$lName = '';
 		$email = '';
@@ -76,9 +77,11 @@ class SiteController extends Controller
 		$date = 'off';
 		$kids = 0;
 		$message = 'No content available';
+		$rsvpemail = 'kevin@kevinbrink.com';
 		
 		// Set all of the variables to their passed-in values, if
 		// available
+		$coming = isset($_POST['coming']) ? "Yes" : "No";
 		if(isset($_POST['fName'])) { $fName = $_POST['fName']; }
 		if(isset($_POST['lName'])) { $lName = $_POST['lName']; }
 		if(isset($_POST['email'])) { $email = $_POST['email']; }
@@ -99,54 +102,90 @@ class SiteController extends Controller
 		if (isset($_POST['fName']) || isset($_POST['lName']) || isset($_POST['email'])) {
 			$message = '
 RSVP from ' . $fName .  ' ' . $lName . ' (' . $email . ')
+Coming: ' . $coming;
+		}
+		if($coming == "Yes")
+		{
+			$message .= '
 Choice of meal: ' . $meal . '
 Bringing a date: ' . $date . '
 Number of kids: ' . $kids . '
 						';
-		}
-		
-		if($date === "Yes")
-		{
-			$dateName = $_POST['date-0-fName'] . ' ' . $_POST['date-0-lName'];
-			$dateMeal = $this->getMeal($_POST['date-0-meal']);
-				
-			$message .= '
+			if($date === "Yes")
+			{
+				$dateName = $_POST['date-fName'] . ' ' . $_POST['date-lName'];
+				$dateMeal = $this->getMeal($_POST['date-meal']);
+					
+				$message .= '
 Date: ' . $dateName .'
 Meal: ' .$dateMeal . '
 ';
-		}
-		
-		if (isset($_POST['kids']) && $_POST['kids'] > 0)
-		{
-			$kidNum = $_POST['kids'];
-			$message .= '
+			}
+			
+			if (isset($_POST['kids']) && $_POST['kids'] > 0)
+			{
+				$kidNum = $_POST['kids'];
+				$message .= '
 '. $kidNum . ' kids:
 ';
-			while($kidNum > 0)
-			{
-				$message .= '
+				while($kidNum > 0)
+				{
+					$message .= '
 ';
-				$kidName = $_POST['kid-' . $kidNum . '-fName'] . ' ' . $_POST['kid-' . $kidNum . '-lName'];
-				$kidMeal = $this->getMeal($_POST['kid-' . $kidNum . '-meal']);
-				
-				$message .= 
+					$kidName = $_POST['kid-' . $kidNum . '-fName'] . ' ' . $_POST['kid-' . $kidNum . '-lName'];
+					$kidMeal = $this->getMeal($_POST['kid-' . $kidNum . '-meal']);
+					
+					$message .= 
 'Name: ' . $kidName . ' 
 Meal:' . $kidMeal;
-				
-				$kidNum--;
-			}
-		}		
-		
+					
+					$kidNum--;
+				}
+			}		
+		}
 		if(isset($note))
 		{
 			$message .= '
 Note:
 ' . $note;
 		}
-
-		Yii::app()->user->setFlash('contact',mail("rsvp@ryanandbrittany.com",$subject,$message,$headers) ? "True" : "False");
-		
-		$this->render('confirm');
+		Yii::app()->user->setFlash('contact',mail($rsvpemail,$subject,$message,$headers) ? "True" : "False");
+		if ($coming == "Yes") {
+			// Send confirmation email. We won't be using it, but in case
+			// we want to enable it, just uncomment a few lines:
+//			$name= 'Ryan and Brittany';
+//			$subject="We've received your RSVP";
+//			$headers="From: $name <{$rsvpemail}>\r\n".
+//				"Reply-To: {$rsvpemail}\r\n" .
+//				"MIME-Version: 1.0\r\n" .
+//				"Content-Type: text/plain; charset=UTF-8";
+//			// Count how many total people are coming
+//			$numguests = 1;
+//			if ($date == "Yes") {
+//				// One more
+//				$numguests++;
+//			}
+//			if ($_POST['kids']) {
+//				// Add however many kids we have
+//				$date += $_POST['kids'];
+//			}
+//			$message = "We're more excited than you are.";
+//			if ($numguests > 1) {
+//				$message .= "
+//We've reserved a total of $numguests seats";
+//			}
+//			$message .= "
+//
+//See you February First!
+//
+//Ryan and Brittany";
+//			mail($email,$subject,$message,$headers);
+			
+			$this->render('confirm');
+		}
+		else {
+			$this->render('sorry');
+		}
 	}
 
 	/**

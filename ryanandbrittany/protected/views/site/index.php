@@ -13,27 +13,39 @@ please use the form below to let us know that you will
 be attending, and who will be joining you.<br /><br /></p>
 
 <form action="index.php?r=site/confirm" method="post" name="ContactForm" class="container">
+		<strong>I am coming</strong>
+				<input name="coming" id="coming" type="checkbox" style="margin-bottom: 10px">
 		<div class="row">		
 			<div class="span3">
 				<label><strong>Name</strong></label>
 					<input name="fName" type="text" class="span3" placeholder="First">
 					<input name="lName" type="text" class="span3" placeholder="Last">
 				<label><strong>Email Address</strong></label>
-					<input name="email" type="text" class="span3" placeholder="Your email address">					
-				<label><strong>Your meal</strong></label>	
-				<small>The meal will be buffet style: gluten and dairy free potatoes, vegetables, and your choice of beef or chicken.</small>		
-					<select name="meal" id="meal" class="span3">
-						<option value="0" selected="selected">Chicken</option>
-						<option value="1">Roast Beef</option>
-					</select>				
+					<input name="email" type="text" class="span3" placeholder="Your email address">
+				<div class="hidden-form" id="meal-form" style="display: none">
+					<label><strong>Your meal</strong></label>
+						<small>The meal will be buffet style: gluten and dairy free potatoes, vegetables, and your choice of beef or chicken.</small>		
+							<select name="meal" id="meal" class="span3">
+								<option value="0" selected="selected">Chicken</option>
+								<option value="1">Roast Beef</option>
+							</select>
+				</div>
 			</div>
-			<div class="span3">	
+			<div id="date-info" class="span3 hidden-form" style="visibility: hidden">	
 				<strong>Bringing a date?</strong> <input name="date" id="date" type="checkbox">
-				<div id="date-information">
-					<!--Place to put additional adult forms-->
+				<div id="date-form" style="visibility: hidden">
+					<h4>Date's information:</h4>
+					<label><strong>Name</strong></label>
+					<input name="date-fName"  type="text" class="span3" placeholder="First">
+					<input name="date-lName" type="text" class="span3" placeholder="Last">
+					<label><strong>Meal</strong></label>
+						<select name="date-meal" id="meal" class="span3">
+							<option value="0" selected="selected">Chicken</option>
+							<option value="1">Roast Beef</option>
+						</select>
 				</div>	
 			</div>
-			<div class="span5">			
+			<div id="kid-info" class="span5 hidden-form" style="visibility: hidden">			
 				<label><strong>How many children are you bringing?</strong></label>
 				<small>There is a nursery available at New Testament Church, so please feel free to bring your kids.</small>
 				<br />
@@ -120,18 +132,13 @@ which is at
 	  });
 	  
 	  $("#date").change(function() {
-		if ($(this).is(':checked')) {
-			// Bringing a date
-			$("#date-information").append('\
-				<div id="date-info" class="form">\
-					<h4>Date\'s information:</h4>' +
-					getPersonForm("date", 0) + 
-				'</div>');
+		if ($(this).is(":checked")) {
+			$("#date-form").css("visibility", "visible");
 		}
 		else {
-			// Need to remove that form
-			$("#date-information").children().last().remove();
+			$("#date-form").css("visibility", "hidden");
 		}
+		
 	  });
 	  
 	  $("#kids").change(function() {
@@ -152,6 +159,19 @@ which is at
 					<h4>Child ' + current_num_kids + '\'s information:</h4>' +
 					getPersonForm("kid", current_num_kids) + 
 				'</div>');
+		}
+	  });
+	  
+	  $("#coming").change(function() {
+		if ($(this).is(":checked")) {
+			// Coming; show extra forms
+			$("#meal-form, #greeting").show();
+			$("#date-info, #kid-info").css("visibility", "visible");
+		}
+		else {
+			// Hide extra forms
+			$("#meal-form, #greeting").hide();
+			$("#date-info, #kid-info").css("visibility", "hidden");
 		}
 	  });
 
