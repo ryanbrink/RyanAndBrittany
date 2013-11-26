@@ -116,7 +116,7 @@ Meal: ' .$dateMeal . '
 ';
 		}
 		
-		if ($_POST['kids'] > 0)
+		if (isset($_POST['kids']) && $_POST['kids'] > 0)
 		{
 			$kidNum = $_POST['kids'];
 			$message .= '
