@@ -12,54 +12,64 @@ $this->pageTitle=Yii::app()->name;
 please use the form below to let us know that you will 
 be attending, and who will be joining you.<br /><br /></p>
 
-<form action="index.php?r=site/contact" method="post" name="ContactForm" class="row">
-		<div class="span3">
-			<label>First Name</label>
-				<input name="meal" type="text" class="span3" placeholder="Your First Name">
-			<label>Last Name</label>
-				<input name="lName" type="text" class="span3" placeholder="Your Last Name">
-			<label>Meal</label>
-			<!--TODO: Probably want this to be a select? -->
-				<select name="meal" id="meal" class="span3">
-					<option value="0" selected="selected">Chicken</option>
-					<option value="1">Roast Beef</option>
-			<label>Email Address</label>
-				<input name="email" type="text" class="span3" placeholder="Your email address">
-			<!--TODO: Fun css stlying to make it purdy-->
-			Bringing a date
-				<input name="date" id="date" type="checkbox" class="span3">
-			<div id="date-information">
-				<!--Place to put additional adult forms-->
+<form action="index.php?r=site/confirm" method="post" name="ContactForm" class="container">
+		<div class="row">		
+			<div class="span3">
+				<label><strong>Name</strong></label>
+					<input name="fName" type="text" class="span3" placeholder="First">
+					<input name="lName" type="text" class="span3" placeholder="Last">
+				<label><strong>Email Address</strong></label>
+					<input name="email" type="text" class="span3" placeholder="Your email address">					
+				<label><strong>Your meal</strong></label>	
+				<small>The meal will be buffet style: gluten and dairy free potatoes, vegetables, and your choice of beef or chicken.</small>		
+					<select name="meal" id="meal" class="span3">
+						<option value="0" selected="selected">Chicken</option>
+						<option value="1">Roast Beef</option>
+					</select>				
 			</div>
-			<label>How many children are you bringing?</label>
-				<select name="kids" id="kids" class="span3">
-					<option value="0" selected="selected">0</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-					<option value="8">8</option>
-					<option value="9">9</option>
-					<option value="10">10</option>
-				</select>
-			<div id="additional-kids">
-				<!--Place to put additional kid forms-->
+			<div class="span3">	
+				<strong>Bringing a date?</strong> <input name="date" id="date" type="checkbox">
+				<div id="date-information">
+					<!--Place to put additional adult forms-->
+				</div>	
 			</div>
-			<label>Note</label>
-			<textarea name="message" id="message" placeholder="Anything else we should know about?" class="span3"
-				rows="10"></textarea>
+			<div class="span5">			
+				<label><strong>How many children are you bringing?</strong></label>
+				<small>There is a nursery available at New Testament Church, so please feel free to bring your kids.</small>
+				<br />
+					<select name="kids" id="kids" class="span3">
+						<option value="0" selected="selected">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+					</select>
+				<div id="additional-kids">
+					<!--Place to put additional kid forms-->
+				</div>
+			</div>
+		</div>
+		<br /><br />
+		<div class="row">
+			<div class="span3">
+				<label><strong>Note</strong></label>
+				<textarea name="message" id="message" placeholder="Anything else we should know about?" class="span3"
+					rows="10"></textarea>				
+			</div>		
+			<div class="span6">
+			<br />
+			We're so glad you can be at our special day!
+			<br /><br />
+			If you have any issues with the form, feel free to simply email <a href="mailto:rsvp@ryanandbrittany.com">rsvp@ryanandbrittany.com</a>, or call 613-362-2609.				
+			<br /><br />
 			<button type="submit" class="btn btn-primary">Submit</button>
-		</div>		
-		<div class="span6">
-		We're so glad you can be at our special day! Please fill in your information, as well as your date and any children you will be bringing. There is a nursery available at New Testament Church, so please feel free to bring your kids.
-		<br /><br />
-		The meal will be buffet style: gluten and dairy free potatoes, vegetables, and your choice of beef or chicken.
-		<br /><br />
-		If you have any issues with the form, feel free to simply email <a href="mailto:rsvp@ryanandbrittany.com">rsvp@ryanandbrittany.com</a>, or call 613-362-2609.				
-
+			</div>
 		</div>	
 </form>
 <hr />
@@ -114,7 +124,7 @@ which is at
 			// Bringing a date
 			$("#date-information").append('\
 				<div id="date-info" class="form">\
-					<h4>Date information:</h4>' +
+					<h4>Date\'s information:</h4>' +
 					getPersonForm("date", 0) + 
 				'</div>');
 		}
@@ -139,7 +149,7 @@ which is at
 			// Add a new kid to the additional kids div
 			$("#additional-kids").append('\
 				<div id="kid-' + (++current_num_kids) + '-info" class="form">\
-					<h4>Child ' + current_num_kids + ':</h4>' +
+					<h4>Child ' + current_num_kids + '\'s information:</h4>' +
 					getPersonForm("kid", current_num_kids) + 
 				'</div>');
 		}
@@ -149,11 +159,10 @@ which is at
 	// individual person
 	function getPersonForm(type, num) {
 		return '\
-			<label>First Name</label>\
-				<input name="' + type + '-' + num + '-lName"  type="text" class="span3" placeholder="First Name">\
-			<label>Last Name</label>\
-				<input name="' + type + '-' + num + '-meal" type="text" class="span3" placeholder="Last Name">\
-			<label>Meal</label>\
+			<label><strong>Name</strong></label>\
+				<input name="' + type + '-' + num + '-fName"  type="text" class="span3" placeholder="First">\
+				<input name="' + type + '-' + num + '-lName" type="text" class="span3" placeholder="Last">\
+			<label><strong>Meal</strong></label>\
 				<select name="' + type + '-' + num + '-meal" id="meal" class="span3">\
 					<option value="0" selected="selected">Chicken</option>\
 					<option value="1">Roast Beef</option>'

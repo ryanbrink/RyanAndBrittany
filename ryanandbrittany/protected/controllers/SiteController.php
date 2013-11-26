@@ -6,7 +6,7 @@ class SiteController extends Controller
 	 * Declares class-based actions.
 	 */
 	public function actions()
-	{
+	{		
 		return array(
 			// captcha action renders the CAPTCHA image displayed on the contact page
 			'captcha'=>array(
@@ -59,12 +59,15 @@ class SiteController extends Controller
 				$this->render('error', $error);
 		}
 	}
+	
+	
 
 	/**
 	 * Displays the contact page
 	 */
-	public function actionContact()
+	public function actionConfirm()
 	{
+		$this->layout = "minimal";
 		// Declare variables that are needed to default
 		$fName = '';
 		$lName = '';
@@ -79,51 +82,71 @@ class SiteController extends Controller
 		if(isset($_POST['fName'])) { $fName = $_POST['fName']; }
 		if(isset($_POST['lName'])) { $lName = $_POST['lName']; }
 		if(isset($_POST['email'])) { $email = $_POST['email']; }
-		if(isset($_POST['meal'])) { $meal = $this->getMeal($_POST['meal']); }
-		if(isset($_POST['date'])) { $date = ($_POST['date'] == "on") ? "Yes" : "No"; }
+		if(isset($_POST['meal'])) { $meal = $this->getMeal($_POST['meal']); }		
+		$date = isset($_POST['date']) ? "Yes" : "No";		
 		if(isset($_POST['kids'])) { $kids = $_POST['kids']; }
+		if(isset($_POST['message'])) { $note = $_POST['message']; }
 		
-		$name='=?UTF-8?B?'.base64_encode($fName + ' ' + $lName).'?=';
-		$subject='=?UTF-8?B?'.base64_encode('RSVP from ' + $name).'?=';
+		
+		$name= $fName . ' ' . $lName;
+		$subject='RSVP from ' . $name;
 		$headers="From: $name <{$email}>\r\n".
-			"Reply-To: {$email}\r\n".
-			"MIME-Version: 1.0\r\n".
+			"Reply-To: {$email}\r\n" .
+			"MIME-Version: 1.0\r\n" .
 			"Content-Type: text/plain; charset=UTF-8";
-
+		
 		// Set the message, provided we have SOMETHING to work with from the form
 		if (isset($_POST['fName']) || isset($_POST['lName']) || isset($_POST['email'])) {
-			$message = '\
-				RSVP from ' + $name + '\n\n\
-				Choice of meal: ' + $meal + '\n\
-				Bringing a date: ' + $date + '\n\
-				Number of kids: ' + $kids;
+			$message = '
+RSVP from ' . $fName .  ' ' . $lName . ' (' . $email . ')
+Choice of meal: ' . $meal . '
+Bringing a date: ' . $date . '
+Number of kids: ' . $kids . '
+						';
+		}
+		
+		if($date === "Yes")
+		{
+			$dateName = $_POST['date-0-fName'] . ' ' . $_POST['date-0-lName'];
+			$dateMeal = $this->getMeal($_POST['date-0-meal']);
+				
+			$message .= '
+Date: ' . $dateName .'
+Meal: ' .$dateMeal . '
+';
+		}
+		
+		if ($_POST['kids'] > 0)
+		{
+			$kidNum = $_POST['kids'];
+			$message .= '
+'. $kidNum . ' kids:
+';
+			while($kidNum > 0)
+			{
+				$message .= '
+';
+				$kidName = $_POST['kid-' . $kidNum . '-fName'] . ' ' . $_POST['kid-' . $kidNum . '-lName'];
+				$kidMeal = $this->getMeal($_POST['kid-' . $kidNum . '-meal']);
+				
+				$message .= 
+'Name: ' . $kidName . ' 
+Meal:' . $kidMeal;
+				
+				$kidNum--;
+			}
+		}		
+		
+		if(isset($note))
+		{
+			$message .= '
+Note:
+' . $note;
 		}
 
-		mail("rsvp@ryanandbrittany.com",$subject,$message,$headers);
-		Yii::app()->user->setFlash('contact','Thank you for RSVP-ing.');
-		$this->refresh();
+		Yii::app()->user->setFlash('contact',mail("rsvp@ryanandbrittany.com",$subject,$message,$headers) ? "True" : "False");
 		
-		// TODO: I'd be nice to get some proper, backend validation with this stuff:
-		
-		//$model=new ContactForm;
-		//if(isset($_POST['ContactForm']))
-		//{
-		//	$model->attributes=$_POST['ContactForm'];
-		//	if($model->validate())
-		//	{
-		//		$name='=?UTF-8?B?'.base64_encode($model->name).'?=';
-		//		$subject='=?UTF-8?B?'.base64_encode($model->subject).'?=';
-		//		$headers="From: $name <{$model->email}>\r\n".
-		//			"Reply-To: {$model->email}\r\n".
-		//			"MIME-Version: 1.0\r\n".
-		//			"Content-Type: text/plain; charset=UTF-8";
-		//
-		//		mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-		//		Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-		//		$this->refresh();
-		//	}
-		//}
-		//$this->render('contact',array('model'=>$model));
+		$this->render('confirm');
 	}
 
 	/**
