@@ -18,24 +18,35 @@
 	$baseUrl = Yii::app()->baseUrl;
 	$cs = Yii::app()->getClientScript();
 	$cs->registerCssFile($baseUrl.'/css/ryanandbrittany.css');
-	?>
-	<div id="myCarousel" class="carousel mytop slide">
-		<div class="carousel-inner">
-			<div class="active item one"></div>
-			<div class="item two"></div>
-			<div class="item three"></div>
-			<div class="item four"></div>
-			<div class="item five"></div>
-			<div class="item six"></div>
-			<div class="item seven"></div>
-			<div class="item eight"></div>
-			<div class="item nine"></div>
-		</div>
-	</div>
 	
+	if(!Yii::app()->detectMobileBrowser->getIsMobile())
+	{
+	?>
+		<div id="myCarousel" class="carousel mytop slide">
+			<div class="carousel-inner">
+				<div class="active item one"></div>
+				<div class="item two"></div>
+				<div class="item three"></div>
+				<div class="item four"></div>
+				<div class="item five"></div>
+				<div class="item six"></div>
+				<div class="item seven"></div>
+				<div class="item eight"></div>
+				<div class="item nine"></div>
+			</div>
+		</div>
+	<?php 
+	}
+	?>
 	
 		
-	<div class="main-content">	
+		
+		<?php
+		if(!Yii::app()->detectMobileBrowser->getIsMobile())
+		{			
+			
+		?>
+	<div class="main-content">
 		<div class="container">
 			<div class="row logo">
 			<div class="col-md-4"></div>
@@ -67,6 +78,15 @@
 )); ?>
 				
 		<?php 
+		}
+		else 
+		{
+			?>
+			<div>
+			<img src="assets/img/Logo.png" class="img-responsive" alt="Ryan + Brittany" />
+			<?php 
+		}
+		
 		echo $content; ?>
 		
 		</div>
