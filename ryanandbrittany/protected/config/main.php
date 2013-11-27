@@ -44,6 +44,9 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+		'detectMobileBrowser' => array(
+				'class' => 'ext.yii-detectmobilebrowser.XDetectMobileBrowser',
+		),
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(

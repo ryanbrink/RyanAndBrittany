@@ -77,7 +77,7 @@ class SiteController extends Controller
 		$date = 'off';
 		$kids = 0;
 		$message = 'No content available';
-		$rsvpemail = 'kevin@kevinbrink.com';
+		$rsvpemail = 'rsvp@ryanandbrittany.com';
 		
 		// Set all of the variables to their passed-in values, if
 		// available
