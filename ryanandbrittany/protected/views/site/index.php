@@ -76,8 +76,6 @@ be attending, and who will be joining you.<br /><br /></p>
 			</div>		
 			<div class="span6">
 			<br />
-			We're so glad you can be at our special day!
-			<br /><br />
 			If you have any issues with the form, feel free to simply email <a href="mailto:rsvp@ryanandbrittany.com">rsvp@ryanandbrittany.com</a>, or call 613-362-2609.				
 			<br /><br />
 			<button type="submit" class="btn btn-ttc">Submit</button>
