@@ -71,7 +71,8 @@
             'items'=>array(
                 array('label'=>'RSVP', 'url'=>'#rsvp'),
                 array('label'=>'About Us', 'url'=>'#about'),
-                array('label'=>'Directions', 'url'=>'#directions',)
+                array('label'=>'Directions', 'url'=>'#directions',),
+				array('label'=>'Gifts', 'url'=>'#gifts',)
             ),
         ),        
     ),
@@ -92,6 +93,7 @@
 		</div>
 		
 	
+	</div>
 	</div>
 
 </body>

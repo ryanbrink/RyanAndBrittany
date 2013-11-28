@@ -78,32 +78,40 @@ be attending, and who will be joining you.<br /><br /></p>
 			<br />
 			If you have any issues with the form, feel free to simply email <a href="mailto:rsvp@ryanandbrittany.com">rsvp@ryanandbrittany.com</a>, or call 613-362-2609.				
 			<br /><br />
-			<button type="submit" class="btn btn-ttc">Submit</button>
+			<button type="submit" class="btn btn-lg">Submit</button>
 			</div>
 		</div>	
 </form>
 <hr />
-<h2 id="about">About Us</h2>
-<h4>A little bit about Ryan and Brittany</h4>
-<p>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br /></p>
-<hr />
-<h2 id="directions">Directions</h2>
-<h4>How to get to our big day</h4>
-<p>Our wedding will be held at New Testament Church 
-which is at 
-<a href="https://maps.google.com/maps?q=New+Testament+Church,+Andrews+Street,+Massena,+NY,+USA&hl=en&ll=44.923123,-74.91457&spn=0.112794,0.264187&sll=37.0625,-95.677068&sspn=63.343847,135.263672&oq=new+&t=m&hq=New+Testament+Church,&hnear=Andrews+St,+Massena,+St+Lawrence,+New+York+13662&z=13&iwloc=A">
-265 Andrews Street in Massena, New York</a>.
+<div class="row">
+	<div class="span4">
+		<h2 id="about">About Us</h2>
+		<h4>Here is a bit of our story</h4>
+	</div>
+	<div class="span4 pull-right">
+		<img src="assets/img/Laugh.jpg" class="img-rounded img-responsive" alt="it's always a good time" />
+	</div>
+</div>
 
+<hr />
+<div class="row">		
+	<div class="span4 pull-right">
+	<h2 id="directions">Directions</h2>
+	<h4>How to get to our big day</h4>
+	<p>Our wedding will be held at New Testament Church 
+	which is at 
+	<a href="https://maps.google.com/maps?q=New+Testament+Church,+Andrews+Street,+Massena,+NY,+USA&hl=en&ll=44.923123,-74.91457&spn=0.112794,0.264187&sll=37.0625,-95.677068&sspn=63.343847,135.263672&oq=new+&t=m&hq=New+Testament+Church,&hnear=Andrews+St,+Massena,+St+Lawrence,+New+York+13662&z=13&iwloc=A">
+	265 Andrews Street in Massena, New York</a>.</p>
+	</div>	
+	<div class="span4">
+		<img src="assets/img/NTC.png" class="img-rounded img-responsive" alt="New Testament Church, Massena" />
+	</div>
+</div>
+<hr />
+<h2 id="gifts">Gifts</h2>
+<h4>How you can be a blessing to us</h4>
+<p>We are very blessed to have many of the basics we need for our new home, but besides
+appreciating gift cards and cash we do have a small registry at <a href="http://www.walmart.com/giftregistry/gr_detail.do?registryId=86203283509">Walmart</a> if you're looking for gift ideas.
 <br />
 <br />
 <br />
